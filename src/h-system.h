@@ -13,104 +13,88 @@
  * This file has been rebuilt -- it may need a little more work.
  */
 
-/** ANSI C headers **/
+
+/*** ANSI C headers ***/
+
 #include <ctype.h>
+#include <assert.h>
+
+#ifdef _WIN32_WCE
+/* Non-standard crap */
+#else
 #include <errno.h>
-/* limits.h */
-/* assert.h */
+#endif
 
 #include <stdarg.h>
 #include <stdio.h>
-#if defined(NeXT)
+
+#if defined(NeXT) /* More non-standard crap */
 # include <libc.h>
 #else
 # include <stdlib.h>
-#endif /* NeXT */
-/* stddef.h */
+#endif
+
 #include <string.h>
+
+#ifdef _WIN32_WCE
+/* Even more non-standard crap */
+#else
 #include <time.h>
+#endif
+
+/*** POSIX headers ***/
+
+#if !defined(NeXT) && !defined(RISCOS)
+#ifdef _WIN32_WCE
+#else
+# include <fcntl.h>
+#endif
+#endif
 
 
-/** Other headers **/
-
-
-
-
+#if defined (SET_UID) || defined (MACH_O_CARBON)
+# include <pwd.h>
+# include <sys/stat.h>
+# include <unistd.h>
+#endif
 
 #ifdef SET_UID
-
 # include <sys/types.h>
+#endif
 
-# if defined(Pyramid) || defined(NeXT) || defined(SUNOS) || \
-     defined(NCR3K) || defined(SUNOS) || defined(ibm032) || \
-     defined(__osf__) || defined(ISC) || defined(SGI) || \
-     defined(linux)
-#  include <sys/time.h>
-# endif
+#if defined(__DJGPP__) || defined(__MWERKS__)
+#include <unistd.h>
+#endif /* __DJGPP__ || __MWERKS__ */
 
-# if !defined(SGI) && !defined(ULTRIX)
-#  include <sys/timeb.h>
-# endif
-
-#endif /* SET_UID */
-
-
-
-
+/*** Other headers ***/
 
 #if defined(MACINTOSH) && defined(__MWERKS__)
 # include <unix.h>
 #endif
 
 #if defined(WINDOWS) || defined(MSDOS) || defined(USE_EMX)
+#ifdef _WIN32_WCE
+#else
 # include <io.h>
 #endif
-
-#if !defined(MACINTOSH) && !defined(AMIGA) && \
-    !defined(RISCOS) && !defined(VM) && !defined(__MWERKS__)
-# if defined(__TURBOC__) || defined(__WATCOMC__)
-#  include <mem.h>
-# else
-#  include <memory.h>
-# endif
-#endif
-
-
-#if !defined(NeXT) && !defined(RISCOS)
-# include <fcntl.h>
 #endif
 
 
 #ifdef SET_UID
 
-# ifndef USG
-#  include <sys/param.h>
-#  include <sys/file.h>
-# endif
+# ifndef HAVE_USLEEP
 
-# ifdef linux
-#  include <sys/file.h>
-# endif
-
-# include <pwd.h>
-
-# include <unistd.h>
-
-# include <sys/stat.h>
-
-# if defined(SOLARIS)
-#  include <netdb.h>
-# endif
+/*
+ * struct timeval in usleep requires sys/time.h
+ *
+ * System test removed since Unix systems that neither have usleep nor
+ * sys/time.h are screwed anyway, since they have no way of delaying.
+ */
+#  include <sys/time.h>
+# endif /* HAVE_USLEEP */
 
 #endif /* SET_UID */
 
-#if defined(__DJGPP__) || defined(__MWERKS__)
-#include <unistd.h>
-#endif /* __DJGPP__ || __MWERKS__ */
-
-
-
-
-#endif /* INCLUDE_H_SYSTEM_H */
+#endif /* INCLUDED_H_SYSTEM_H */
 
 

@@ -1,4 +1,4 @@
-/* CVS: Last edit by $Author: bahman $ on $Date: 2006/01/19 22:38:47 $ */
+/* CVS: Last edit by $Author: bahman $ on $Date: 2001/10/10 17:12:30 $ */
 /* File: h-type.h */
 
 #ifndef INCLUDED_H_TYPE_H
@@ -17,21 +17,9 @@
  * Note that the type used in structures for bit flags should be uint.
  * As long as these bit flags are sequential, they will be space smart.
  *
- * Note that on some machines, apparently "signed char" is illegal.
- *
  * It must be true that char/byte takes exactly 1 byte
- * It must be true that sind/uind takes exactly 2 bytes
- * It must be true that sbig/ubig takes exactly 4 bytes
- *
- * On Sparc's, a sint takes 4 bytes (2 is legal)
- * On Sparc's, a uint takes 4 bytes (2 is legal)
- * On Sparc's, a long takes 4 bytes (8 is legal)
- * On Sparc's, a huge takes 4 bytes (8 is legal)
- * On Sparc's, a vptr takes 4 bytes (8 is legal)
- *
- * Note that some files have already been included by "h-include.h"
- * These include <stdio.h> and <sys/types>, which define some types
- * In particular, uint is defined so we do not have to define it
+ * It must be true that s16b/u16b takes exactly 2 bytes
+ * It must be true that s32b/u32b takes exactly 4 bytes
  *
  * Also, see <limits.h> for min/max values for sind, uind, long, huge
  * (SHRT_MIN, SHRT_MAX, USHRT_MAX, LONG_MIN, LONG_MAX, ULONG_MAX)
@@ -84,7 +72,7 @@ typedef int errr;
 /* An unsigned byte of memory */
 typedef unsigned char byte;
 
-/* Note that a bool is smaller than a full "int" */
+
 /* Simple True/False type */
 typedef char bool;
 
@@ -116,17 +104,13 @@ typedef unsigned long u32b;
 
 
 
-/*** Pointers to all the basic types defined above ***/
-
-typedef char *char_ptr;
-typedef byte *byte_ptr;
-
-
-
 /*** Pointers to Functions with simple return types and any args ***/
 
+/* Replace and remove or move to main-acn.c */
 typedef errr	(*func_errr)();
 typedef bool	(*func_bool)();
+
+
 
 #endif /* INCLUDED_H_TYPE_H */
 
